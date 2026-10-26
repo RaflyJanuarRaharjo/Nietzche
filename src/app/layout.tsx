@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import "./globals.css";
 import RevealObserver from "@/components/RevealObserver";
+import Preloader from "@/components/Preloader";
 
 export const metadata: Metadata = {
   title: "Nietzsche — Build software with a team of AI agents",
@@ -13,7 +14,7 @@ export default function RootLayout({ children }: LayoutProps<"/">) {
     <html lang="en" suppressHydrationWarning>
       <head>
         {/* Enables reveal animations only when JS runs (set before first paint, no flash). */}
-        <script dangerouslySetInnerHTML={{ __html: "document.documentElement.classList.add('js')" }} />
+        <script dangerouslySetInnerHTML={{ __html: "document.documentElement.classList.add('js','loading')" }} />
         <link rel="preconnect" href="https://fonts.googleapis.com" />
         <link rel="preconnect" href="https://fonts.gstatic.com" crossOrigin="" />
         {/* eslint-disable-next-line @next/next/no-page-custom-font */}
@@ -23,6 +24,7 @@ export default function RootLayout({ children }: LayoutProps<"/">) {
         />
       </head>
       <body>
+        <Preloader />
         <div className="scroll-progress" aria-hidden />
         {children}
         <RevealObserver />

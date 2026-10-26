@@ -710,6 +710,69 @@ body {
 .swap-next { animation: swap-next 0.55s var(--ease-out) both; }
 .swap-prev { animation: swap-prev 0.55s var(--ease-out) both; }
 
+
+/* =========================================================
+   Preloader (node 361:948)
+   ========================================================= */
+.preloader {
+  position: fixed;
+  inset: 0;
+  z-index: 100;
+  display: grid;
+  place-items: center;
+  background: var(--brand);
+  clip-path: inset(0 0 0 0);
+  transition: clip-path 0.85s cubic-bezier(0.76, 0, 0.24, 1);
+}
+html:not(.js) .preloader {
+  display: none; /* no JS: never block the page */
+}
+.preloader-logo {
+  width: clamp(120px, 31vw, 451px);
+  height: auto;
+  aspect-ratio: 451 / 541;
+  animation: preloader-breathe 1.6s ease-in-out infinite;
+  transition:
+    scale 0.5s var(--ease-out),
+    opacity 0.4s var(--ease-out);
+}
+.preloader-rays {
+  transform-box: view-box;
+  transform-origin: 224.9px 274.3px;
+  animation: spin 2.4s cubic-bezier(0.6, 0.1, 0.4, 0.9) infinite;
+}
+@keyframes preloader-breathe {
+  0%,
+  100% {
+    scale: 1;
+  }
+  50% {
+    scale: 0.92;
+  }
+}
+/* exit: logo shrinks, orange curtain lifts */
+.preloader-out {
+  clip-path: inset(0 0 100% 0);
+  pointer-events: none;
+}
+.preloader-out .preloader-logo {
+  scale: 0.6;
+  opacity: 0;
+  animation: none;
+}
+
+/* while loading: lock scroll and hold the hero entrance until the curtain lifts */
+html.loading {
+  overflow: hidden;
+}
+html.loading .enter,
+html.loading .enter-down,
+html.loading .enter-scale,
+html.loading .word-enter,
+html.loading .chip-in {
+  animation-play-state: paused;
+}
+
 @media (prefers-reduced-motion: reduce) {
   html {
     scroll-behavior: auto;
