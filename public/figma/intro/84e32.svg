@@ -1,0 +1,54 @@
+<svg preserveAspectRatio="none" overflow="visible" style="display: block;" width="35.8942" height="38.25" viewBox="0 0 35.8942 38.25" fill="none" xmlns="http://www.w3.org/2000/svg">
+<g id="Logomark wrapper" filter="url(#filter0_d_0_58)">
+<g clip-path="url(#clip0_0_58)">
+<g id="Vector">
+<path d="M21.8155 3.7904L18.8658 3L16.38 12.2772L14.1357 3.90168L11.1859 4.69208L13.6107 13.7412L7.57116 7.70174L5.41176 9.86114L12.0363 16.4858L3.78649 14.2752L2.99609 17.225L12.0101 19.6403C11.9069 19.1951 11.8523 18.7313 11.8523 18.2548C11.8523 14.8816 14.5868 12.1471 17.96 12.1471C21.3332 12.1471 24.0677 14.8816 24.0677 18.2548C24.0677 18.7283 24.0138 19.1892 23.9119 19.6317L32.1039 21.8267L32.8942 18.877L23.8444 16.4521L32.0948 14.2414L31.3044 11.2916L22.2549 13.7164L28.2944 7.67695L26.135 5.51755L19.6023 12.0502L21.8155 3.7904Z" fill="url(#paint0_linear_0_58)"/>
+<path d="M23.9032 19.6661C23.6503 20.7353 23.1164 21.6958 22.3838 22.4654L28.3186 28.4002L30.478 26.2408L23.9032 19.6661Z" fill="url(#paint1_linear_0_58)"/>
+<path d="M22.3239 22.5274C21.5824 23.2847 20.6455 23.8498 19.5947 24.141L21.7543 32.2006L24.704 31.4101L22.3239 22.5274Z" fill="url(#paint2_linear_0_58)"/>
+<path d="M19.4845 24.1705C18.997 24.2959 18.4861 24.3625 17.9595 24.3625C17.3953 24.3625 16.849 24.286 16.3304 24.1428L14.1689 32.2097L17.1186 33L19.4845 24.1705Z" fill="url(#paint3_linear_0_58)"/>
+<path d="M16.2261 24.113C15.1914 23.8073 14.2711 23.235 13.5448 22.4756L7.5954 28.425L9.75479 30.5844L16.2261 24.113Z" fill="url(#paint4_linear_0_58)"/>
+<path d="M13.4957 22.423C12.7819 21.6587 12.2619 20.711 12.0144 19.6583L3.79563 21.8605L4.58601 24.8103L13.4957 22.423Z" fill="url(#paint5_linear_0_58)"/>
+</g>
+</g>
+</g>
+<defs>
+<filter id="filter0_d_0_58" x="0" y="-0.75" width="36" height="42" filterUnits="userSpaceOnUse" color-interpolation-filters="sRGB">
+<feFlood flood-opacity="0" result="BackgroundImageFix"/>
+<feColorMatrix in="SourceAlpha" type="matrix" values="0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 127 0" result="hardAlpha"/>
+<feMorphology radius="1.5" operator="erode" in="SourceAlpha" result="effect1_dropShadow_0_58"/>
+<feOffset dy="2.25"/>
+<feGaussianBlur stdDeviation="2.25"/>
+<feComposite in2="hardAlpha" operator="out"/>
+<feColorMatrix type="matrix" values="0 0 0 0 0.141176 0 0 0 0 0.141176 0 0 0 0 0.141176 0 0 0 0.1 0"/>
+<feBlend mode="normal" in2="BackgroundImageFix" result="effect1_dropShadow_0_58"/>
+<feBlend mode="normal" in="SourceGraphic" in2="effect1_dropShadow_0_58" result="shape"/>
+</filter>
+<linearGradient id="paint0_linear_0_58" x1="17.9452" y1="3" x2="17.9452" y2="33" gradientUnits="userSpaceOnUse">
+<stop stop-color="white" stop-opacity="0.8"/>
+<stop offset="1" stop-color="white" stop-opacity="0.5"/>
+</linearGradient>
+<linearGradient id="paint1_linear_0_58" x1="17.9452" y1="3" x2="17.9452" y2="33" gradientUnits="userSpaceOnUse">
+<stop stop-color="white" stop-opacity="0.8"/>
+<stop offset="1" stop-color="white" stop-opacity="0.5"/>
+</linearGradient>
+<linearGradient id="paint2_linear_0_58" x1="17.9452" y1="3" x2="17.9452" y2="33" gradientUnits="userSpaceOnUse">
+<stop stop-color="white" stop-opacity="0.8"/>
+<stop offset="1" stop-color="white" stop-opacity="0.5"/>
+</linearGradient>
+<linearGradient id="paint3_linear_0_58" x1="17.9452" y1="3" x2="17.9452" y2="33" gradientUnits="userSpaceOnUse">
+<stop stop-color="white" stop-opacity="0.8"/>
+<stop offset="1" stop-color="white" stop-opacity="0.5"/>
+</linearGradient>
+<linearGradient id="paint4_linear_0_58" x1="17.9452" y1="3" x2="17.9452" y2="33" gradientUnits="userSpaceOnUse">
+<stop stop-color="white" stop-opacity="0.8"/>
+<stop offset="1" stop-color="white" stop-opacity="0.5"/>
+</linearGradient>
+<linearGradient id="paint5_linear_0_58" x1="17.9452" y1="3" x2="17.9452" y2="33" gradientUnits="userSpaceOnUse">
+<stop stop-color="white" stop-opacity="0.8"/>
+<stop offset="1" stop-color="white" stop-opacity="0.5"/>
+</linearGradient>
+<clipPath id="clip0_0_58">
+<rect width="30" height="36" fill="white" transform="translate(3)"/>
+</clipPath>
+</defs>
+</svg>

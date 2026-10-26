@@ -1,0 +1,728 @@
+@import "tailwindcss";
+
+:root {
+  --neutral-50: #fafafa;
+  --neutral-100: #f5f5f5;
+  --neutral-200: #e5e5e5;
+  --neutral-500: #737373;
+  --neutral-600: #525252;
+  --neutral-800: #262626;
+  --neutral-900: #171717;
+  --neutral-950: #0a0a0a;
+  --off-white: #f1f3ee;
+  --fg-muted: #6b6b6b;
+  --border-default: #e4e4e4;
+  --border-subtle: #ededed;
+  --brand: #ea580c;
+  --brand-dark: #c2410c;
+  --brand-light: #f97316;
+}
+
+@theme inline {
+  --color-neutral-50: var(--neutral-50);
+  --color-neutral-100: var(--neutral-100);
+  --color-neutral-200: var(--neutral-200);
+  --color-neutral-500: var(--neutral-500);
+  --color-neutral-600: var(--neutral-600);
+  --color-neutral-800: var(--neutral-800);
+  --color-neutral-900: var(--neutral-900);
+  --color-neutral-950: var(--neutral-950);
+  --color-off-white: var(--off-white);
+  --color-fg-muted: var(--fg-muted);
+  --color-border-default: var(--border-default);
+  --color-border-subtle: var(--border-subtle);
+  --color-brand: var(--brand);
+  --color-brand-dark: var(--brand-dark);
+  --color-brand-light: var(--brand-light);
+
+  /* Figma: "SF Pro" (UI) — Inter is the web fallback on Windows/Android */
+  --font-sans: "SF Pro Text", "SF Pro", -apple-system, BlinkMacSystemFont, "Inter", "Segoe UI", sans-serif;
+  /* Figma: "Hannari" — rendered as Noto Sans in the design export */
+  --font-display: "Noto Sans", "Inter", sans-serif;
+  --font-mono: "IBM Plex Mono", ui-monospace, monospace;
+}
+
+html {
+  scroll-behavior: smooth;
+  overflow-x: clip;
+}
+
+body {
+  background: #ffffff;
+  color: var(--neutral-900);
+  font-family: var(--font-sans);
+  overflow-x: clip;
+  -webkit-font-smoothing: antialiased;
+}
+
+/* ---------- Agent illustrations ---------- */
+
+/* Each layer moves between its default and hover inset (Figma variants). */
+.illu-layer {
+  position: absolute;
+  inset: var(--d);
+  transition: inset 0.55s cubic-bezier(0.2, 0.8, 0.2, 1);
+}
+.illu-label {
+  position: absolute;
+  top: var(--d);
+  transition: top 0.55s cubic-bezier(0.2, 0.8, 0.2, 1);
+}
+.agent-card:hover .illu-layer,
+.agent-card:focus-within .illu-layer {
+  inset: var(--h);
+}
+.agent-card:hover .illu-label,
+.agent-card:focus-within .illu-label {
+  top: var(--h);
+}
+
+/* Scale a fixed-size illustration down to the card width (pure CSS ratio). */
+.illu-fit {
+  container-type: inline-size;
+}
+.illu-box {
+  --s: min(1, tan(atan2(100cqw, var(--illu-w))));
+  height: calc(240px * var(--s));
+}
+.illu-canvas {
+  position: absolute;
+  top: 0;
+  left: 50%;
+  width: var(--illu-w);
+  height: 240px;
+  overflow: clip;
+  transform-origin: top center;
+  transform: translateX(-50%) scale(var(--s));
+}
+
+/* ---------- CTA scene ---------- */
+
+.scene-fit {
+  container-type: inline-size;
+}
+.scene-box {
+  /* scale relative to an 820px viewport, crop the edges on narrow screens */
+  --s: min(1, tan(atan2(100cqw, 820px)));
+  height: calc(354px * var(--s));
+}
+.scene-canvas {
+  position: absolute;
+  top: 0;
+  left: 50%;
+  width: 1440px;
+  height: 354px;
+  margin-left: -720px;
+  transform-origin: top center;
+  transform: scale(var(--s));
+}
+
+@keyframes float {
+  0%,
+  100% {
+    translate: 0 0;
+  }
+  50% {
+    translate: 0 -8px;
+  }
+}
+.float {
+  animation: float 4.5s ease-in-out infinite;
+}
+.float-slow {
+  animation: float 6s ease-in-out infinite;
+  animation-delay: -2s;
+}
+.float-fast {
+  animation: float 3.5s ease-in-out infinite;
+  animation-delay: -1s;
+}
+
+/* =========================================================
+   Motion system
+   - .enter        : plays on page load (hero, navbar)
+   - [data-reveal] : plays once when scrolled into view (RevealObserver adds .is-in)
+   - --delay / --i : per-element stagger
+   Hidden states only apply when JS is running (html.js), so no-JS still shows content.
+   ========================================================= */
+
+:root {
+  --ease-out: cubic-bezier(0.22, 1, 0.36, 1);
+  --ease-back: cubic-bezier(0.34, 1.56, 0.64, 1);
+}
+
+/* ---- load entrance ---- */
+@keyframes enter-up {
+  from {
+    opacity: 0;
+    translate: 0 28px;
+    filter: blur(8px);
+  }
+  to {
+    opacity: 1;
+    translate: 0 0;
+    filter: blur(0);
+  }
+}
+@keyframes enter-down {
+  from {
+    opacity: 0;
+    translate: 0 -100%;
+  }
+  to {
+    opacity: 1;
+    translate: 0 0;
+  }
+}
+@keyframes enter-scale {
+  from {
+    opacity: 0;
+    scale: 0.94;
+    translate: 0 40px;
+  }
+  to {
+    opacity: 1;
+    scale: 1;
+    translate: 0 0;
+  }
+}
+@keyframes pop-in {
+  0% {
+    opacity: 0;
+    scale: 0.6;
+  }
+  100% {
+    opacity: 1;
+    scale: 1;
+  }
+}
+.enter {
+  animation: enter-up 0.9s var(--ease-out) both;
+  animation-delay: var(--delay, 0s);
+}
+.enter-down {
+  animation: enter-down 0.7s var(--ease-out) both;
+}
+.enter-scale {
+  animation: enter-scale 1.1s var(--ease-out) both;
+  animation-delay: var(--delay, 0s);
+}
+.chip-in {
+  animation: pop-in 0.5s var(--ease-back) both;
+  animation-delay: var(--delay, 0s);
+}
+
+/* hero background drift */
+@keyframes drift {
+  from {
+    scale: 1;
+    translate: 0 0;
+  }
+  to {
+    scale: 1.08;
+    translate: -1.5% -2%;
+  }
+}
+.drift {
+  animation: drift 18s ease-in-out infinite alternate;
+  transform-origin: center top;
+}
+
+/* decorative bursts */
+@keyframes spin {
+  to {
+    rotate: 360deg;
+  }
+}
+.spin-slow {
+  animation: spin 90s linear infinite;
+}
+.spin-slow-reverse {
+  animation: spin 120s linear infinite reverse;
+}
+
+/* blinking caret for the typing placeholder */
+@keyframes caret {
+  50% {
+    opacity: 0;
+  }
+}
+.caret {
+  display: inline-block;
+  width: 2px;
+  height: 1.1em;
+  margin-left: 2px;
+  vertical-align: -0.15em;
+  background: currentColor;
+  animation: caret 1s steps(1) infinite;
+}
+
+/* ---- scroll reveal ---- */
+.js [data-reveal] {
+  opacity: 0;
+  translate: 0 32px;
+  filter: blur(6px);
+  transition:
+    opacity 0.9s var(--ease-out),
+    translate 0.9s var(--ease-out),
+    filter 0.9s var(--ease-out),
+    scale 0.9s var(--ease-out);
+  transition-delay: var(--delay, 0s);
+}
+.js [data-reveal="scale"] {
+  translate: 0 24px;
+  scale: 0.94;
+}
+.js [data-reveal="fade"] {
+  translate: 0 0;
+}
+.js [data-reveal="left"] {
+  translate: -40px 0;
+}
+.js [data-reveal="right"] {
+  translate: 40px 0;
+}
+.js [data-reveal="group"] {
+  /* container only: children animate */
+  opacity: 1;
+  translate: 0 0;
+  filter: none;
+}
+.js [data-reveal].is-in {
+  opacity: 1;
+  translate: 0 0;
+  scale: 1;
+  filter: blur(0);
+}
+
+/* staggered children of a revealed parent */
+.js .stagger-item {
+  opacity: 0;
+  translate: 0 24px;
+  transition:
+    opacity 0.7s var(--ease-out),
+    translate 0.7s var(--ease-out);
+  transition-delay: calc(var(--i, 0) * 70ms + var(--base, 0ms));
+}
+.js .is-in .stagger-item {
+  opacity: 1;
+  translate: 0 0;
+}
+
+/* hero headline words play on load instead of on scroll */
+.word-enter {
+  display: inline-block;
+  animation: enter-up 0.8s var(--ease-out) both;
+  animation-delay: calc(var(--i, 0) * 60ms + 0.15s);
+}
+
+/* agent cards */
+.agent-card,
+.js .agent-card[data-reveal] {
+  transition:
+    box-shadow 0.4s var(--ease-out),
+    translate 0.4s var(--ease-out),
+    opacity 0.9s var(--ease-out),
+    filter 0.9s var(--ease-out),
+    scale 0.9s var(--ease-out);
+}
+.js .agent-card[data-reveal].is-in:hover,
+.agent-card:hover {
+  translate: 0 -6px;
+  transition-delay: 0s;
+}
+
+/* testimonial swap */
+@keyframes swap-in {
+  from {
+    opacity: 0;
+    translate: 0 16px;
+    filter: blur(6px);
+  }
+  to {
+    opacity: 1;
+    translate: 0 0;
+    filter: blur(0);
+  }
+}
+.swap-in {
+  animation: swap-in 0.6s var(--ease-out) both;
+}
+
+/* CTA scene: props burst out of the jar, then float */
+.js .burst {
+  opacity: 0;
+  scale: 0.2;
+  transform-origin: 720px 260px;
+  transition:
+    opacity 0.6s var(--ease-out),
+    scale 1s var(--ease-back);
+  transition-delay: var(--delay, 0s);
+}
+.js .is-in .burst {
+  opacity: 1;
+  scale: 1;
+}
+
+/* CTA button shine */
+@keyframes shine {
+  0%,
+  70% {
+    translate: -120% 0;
+  }
+  100% {
+    translate: 220% 0;
+  }
+}
+.shine {
+  position: relative;
+  overflow: hidden;
+}
+.shine::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  width: 40%;
+  background: linear-gradient(100deg, transparent, rgba(255, 255, 255, 0.45), transparent);
+  animation: shine 3.2s ease-in-out infinite;
+  pointer-events: none;
+}
+
+/* navbar shadow once scrolled */
+.nav-scrolled {
+  box-shadow: 0 8px 24px -16px rgba(23, 23, 23, 0.25);
+}
+
+/* reading progress (scroll-driven, progressive enhancement) */
+.scroll-progress {
+  position: fixed;
+  inset: 0 0 auto 0;
+  height: 3px;
+  z-index: 60;
+  background: var(--brand);
+  transform-origin: left;
+  scale: 0 1;
+  pointer-events: none;
+}
+@supports (animation-timeline: scroll()) {
+  @keyframes grow {
+    to {
+      scale: 1 1;
+    }
+  }
+  .scroll-progress {
+    animation: grow linear both;
+    animation-timeline: scroll(root);
+  }
+}
+
+
+/* =========================================================
+   Intro (node 353:949): scroll-scrubbed reveal + mascot motion
+   --p : section scroll progress 0→1 (set by Intro.tsx)
+   --n : token count, --i : token index
+   --w : per-token progress 0→1
+   ========================================================= */
+.scroll-intro .sword,
+.scroll-intro .smascot {
+  --w: 1; /* no-JS: fully visible */
+}
+.js .scroll-intro .sword,
+.js .scroll-intro .smascot {
+  --w: clamp(0, calc((var(--p) * var(--n) * 1.35 - var(--i)) / 2.5), 1);
+}
+.scroll-intro .sword {
+  display: inline-block;
+  /* light grey → near-black as each word is revealed (also darkens the grey second half) */
+  color: color-mix(in srgb, var(--neutral-900) calc(var(--w) * 100%), #d4d4d4);
+  filter: blur(calc((1 - var(--w)) * 3px));
+  translate: 0 calc((1 - var(--w)) * 0.22em);
+  transition:
+    color 0.25s linear,
+    filter 0.25s linear,
+    translate 0.25s linear;
+}
+.scroll-intro .smascot {
+  opacity: var(--w);
+  transform: scale(calc(0.35 + 0.65 * var(--w))) rotate(calc((1 - var(--w)) * -30deg));
+  transition:
+    opacity 0.25s linear,
+    transform 0.25s linear;
+}
+
+/* decorative bursts drift apart while scrolling */
+.scroll-intro .burst-r {
+  transform: translateY(calc(var(--p) * 80px));
+}
+.scroll-intro .burst-l {
+  transform: translateY(calc(var(--p) * -80px));
+}
+
+/* --- logo badge: spinning logomark, light sweep, soft glow --- */
+@keyframes badge-glow {
+  0%,
+  100% {
+    box-shadow: 0 0 0 0 rgba(234, 88, 12, 0);
+  }
+  50% {
+    box-shadow: 0 0 0 0.18em rgba(234, 88, 12, 0.18);
+  }
+}
+.badge {
+  animation: badge-glow 2.8s ease-in-out infinite;
+}
+.badge > :first-child,
+.badge-sheen {
+  border-radius: inherit;
+}
+.badge-sheen {
+  overflow: hidden;
+}
+.badge-sheen::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  width: 45%;
+  background: linear-gradient(100deg, transparent, rgba(255, 255, 255, 0.5), transparent);
+  animation: shine 3.6s ease-in-out infinite;
+}
+.logo-spin {
+  animation: spin 8s linear infinite;
+}
+.badge:hover .logo-spin {
+  animation-duration: 1.2s;
+}
+
+/* --- blue mascot: leans with scroll, idles with a squishy bob --- */
+@keyframes squish-bob {
+  0%,
+  100% {
+    translate: 0 0;
+    scale: 1 1;
+  }
+  30% {
+    translate: 0 -0.14em;
+    scale: 0.95 1.05;
+  }
+  55% {
+    translate: 0 0;
+    scale: 1.06 0.94;
+  }
+  70% {
+    scale: 1 1;
+  }
+}
+.blue-mascot {
+  transform: rotate(calc((var(--p) - 0.5) * 28deg)) translateY(calc((0.5 - var(--p)) * 0.25em));
+  transition: transform 0.25s linear;
+}
+.blue-bob {
+  transform-origin: 50% 90%;
+  animation: squish-bob 2.4s ease-in-out infinite;
+}
+.blue-mascot:hover .blue-bob {
+  animation-duration: 0.6s;
+}
+
+/* --- peek mascot: slides out from behind the card as you scroll, then plays peek-a-boo --- */
+@keyframes peekaboo {
+  0%,
+  55%,
+  100% {
+    translate: 0 0;
+    rotate: 0deg;
+  }
+  68% {
+    translate: -38% 4%;
+    rotate: -8deg;
+  }
+  82% {
+    translate: 6% -6%;
+    rotate: 6deg;
+  }
+}
+@keyframes glow-pulse {
+  0%,
+  100% {
+    opacity: 0.45;
+  }
+  50% {
+    opacity: 1;
+  }
+}
+.peek-pink {
+  transform: translateX(calc((1 - var(--w, 1)) * -55%));
+  transform-origin: 30% 80%;
+  animation: peekaboo 4s ease-in-out infinite;
+  animation-delay: 1s;
+}
+.peek-glow {
+  animation: glow-pulse 2s ease-in-out infinite;
+}
+.peek-card {
+  transform: rotate(calc((1 - var(--w, 1)) * 14deg));
+  transform-origin: 50% 100%;
+  transition: transform 0.25s linear;
+}
+.peek:hover .peek-pink {
+  animation-duration: 1.2s;
+  animation-delay: 0s;
+}
+
+
+/* =========================================================
+   Agent illustrations: idle loops (node 353:1182)
+   Applied to the inner wrapper of a layer, so they stack on top of the hover lift.
+   Paused until the card has been revealed.
+   ========================================================= */
+.illu-anim {
+  animation-duration: 3s;
+  animation-timing-function: ease-in-out;
+  animation-iteration-count: infinite;
+}
+.js .agent-card:not(.is-in) .illu-anim,
+.js .agent-card:not(.is-in) .count-up {
+  animation-play-state: paused;
+}
+
+@keyframes a-float {
+  0%, 100% { translate: 0 0; }
+  50% { translate: 0 -7px; }
+}
+.a-float { animation-name: a-float; animation-duration: 3.2s; }
+
+@keyframes a-hop {
+  0%, 55%, 100% { translate: 0 0; }
+  68% { translate: 0 -12px; }
+  80% { translate: 0 0; }
+  86% { translate: 0 -3px; }
+  92% { translate: 0 0; }
+}
+.a-hop { animation-name: a-hop; animation-duration: 2.6s; }
+
+@keyframes a-blink {
+  0%, 100% { opacity: 1; }
+  50% { opacity: 0.3; }
+}
+.a-blink { animation-name: a-blink; animation-duration: 2.7s; }
+
+@keyframes a-lift-lg {
+  0%, 100% { translate: 0 0; }
+  50% { translate: 0 -12px; }
+}
+.a-lift-lg { animation-name: a-lift-lg; animation-duration: 3.4s; }
+
+@keyframes a-lift-sm {
+  0%, 100% { translate: 0 0; }
+  50% { translate: 0 -6px; }
+}
+.a-lift-sm { animation-name: a-lift-sm; animation-duration: 3.4s; }
+
+@keyframes a-dot {
+  0%, 40%, 100% { translate: 0 0; }
+  20% { translate: 0 -6px; }
+}
+.a-dot { animation-name: a-dot; animation-duration: 1.8s; }
+
+@keyframes a-drop {
+  0%, 55%, 100% { translate: 0 0; }
+  68% { translate: 0 -14px; }
+  78% { translate: 0 1.5px; }
+  84% { translate: 0 0; }
+}
+.a-drop { animation-name: a-drop; animation-duration: 3.6s; animation-timing-function: cubic-bezier(0.5, 0, 0.3, 1); }
+
+@keyframes a-pass {
+  0%, 50%, 100% { translate: 0 0; }
+  62% { translate: 0 -8px; }
+  74% { translate: 0 0; }
+}
+.a-pass { animation-name: a-pass; animation-duration: 2.8s; }
+
+@keyframes a-shake {
+  0%, 60%, 100% { translate: 0 0; }
+  64% { translate: -3px 1px; }
+  68% { translate: 3px -1px; }
+  72% { translate: -2px 0; }
+  76% { translate: 2px 0; }
+  80% { translate: 0 0; }
+}
+.a-shake { animation-name: a-shake; animation-duration: 2.8s; animation-timing-function: linear; }
+
+@keyframes a-pulse {
+  0%, 100% { opacity: 0.55; }
+  50% { opacity: 1; }
+}
+.a-pulse { animation-name: a-pulse; animation-duration: 1.6s; }
+
+@keyframes a-bob {
+  0%, 100% { translate: 0 0; }
+  50% { translate: 0 -5px; }
+}
+.a-bob { animation-name: a-bob; animation-duration: 1.8s; }
+
+@keyframes a-eq {
+  0%, 100% { translate: 0 0; }
+  50% { translate: 0 -9px; }
+}
+.a-eq { animation-name: a-eq; animation-duration: 1.6s; }
+
+@keyframes a-seg {
+  0%, 30%, 100% { opacity: 0.5; }
+  12% { opacity: 1; }
+}
+.a-seg { animation-name: a-seg; animation-duration: 1.8s; animation-timing-function: linear; }
+
+@keyframes a-breathe {
+  0%, 100% { scale: 1; }
+  50% { scale: 1.03; }
+}
+.a-breathe { animation-name: a-breathe; animation-duration: 2.4s; }
+
+/* score counter 0 → 98 */
+@property --num {
+  syntax: "<integer>";
+  initial-value: 0;
+  inherits: false;
+}
+@keyframes count-up {
+  from { --num: 0; }
+  to { --num: var(--to); }
+}
+.count-up {
+  animation: count-up 2.2s cubic-bezier(0.2, 0.8, 0.2, 1) 0.4s both;
+  counter-reset: num var(--num);
+}
+.count-up::after {
+  content: counter(num);
+}
+
+
+/* testimonial: direction-aware swap */
+@keyframes swap-next {
+  from { opacity: 0; translate: 48px 0; filter: blur(6px); }
+  to { opacity: 1; translate: 0 0; filter: blur(0); }
+}
+@keyframes swap-prev {
+  from { opacity: 0; translate: -48px 0; filter: blur(6px); }
+  to { opacity: 1; translate: 0 0; filter: blur(0); }
+}
+.swap-next { animation: swap-next 0.55s var(--ease-out) both; }
+.swap-prev { animation: swap-prev 0.55s var(--ease-out) both; }
+
+@media (prefers-reduced-motion: reduce) {
+  html {
+    scroll-behavior: auto;
+  }
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.001ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.001ms !important;
+    transition-delay: 0s !important;
+  }
+  .scroll-progress {
+    display: none;
+  }
+}

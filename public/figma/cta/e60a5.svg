@@ -1,0 +1,7 @@
+<svg preserveAspectRatio="none" overflow="visible" style="display: block;" width="30" height="34.5" viewBox="0 0 30 34.5" fill="none" xmlns="http://www.w3.org/2000/svg">
+<g id="Prop/Core cube">
+<path id="Right" d="M30 8.7L15 17.4V34.5L30 25.8V8.7Z" fill="#E09A00"/>
+<path id="Left" d="M0 8.7L15 17.4V34.5L0 25.8V8.7Z" fill="#FFC83D"/>
+<path id="Top" d="M15 0L30 8.7L15 17.4L0 8.7L15 0Z" fill="#FFE38A"/>
+</g>
+</svg>
