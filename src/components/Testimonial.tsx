@@ -100,8 +100,8 @@ export default function Testimonial() {
   return (
     <section id="testimonial" className="relative scroll-mt-28 bg-white">
       <div aria-hidden className="pointer-events-none absolute inset-0 mx-auto max-w-[1440px]">
-        <img src="/figma/testimonial/a66b8.svg" alt="" className="spin-slow absolute top-[62px] left-[-314px] h-[628px] w-[624.6px] max-w-none" />
-        <img src="/figma/testimonial/a66b8.svg" alt="" className="spin-slow-reverse absolute top-[62px] right-[-314px] h-[628px] w-[624.6px] max-w-none" />
+        <img src="/figma/testimonial/a66b8.svg" alt="" className="spin-slow absolute top-[28px] left-[-141px] h-[283px] w-[281px] max-w-none md:top-[43px] md:left-[-220px] md:h-[440px] md:w-[437px] lg:top-[62px] lg:left-[-314px] lg:h-[628px] lg:w-[624.6px]" />
+        <img src="/figma/testimonial/a66b8.svg" alt="" className="spin-slow-reverse absolute top-[28px] right-[-141px] h-[283px] w-[281px] max-w-none md:top-[43px] md:right-[-220px] md:h-[440px] md:w-[437px] lg:top-[62px] lg:right-[-314px] lg:h-[628px] lg:w-[624.6px]" />
       </div>
 
       <figure

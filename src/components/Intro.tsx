@@ -144,8 +144,8 @@ export default function Intro() {
       style={{ "--p": 0, "--n": count() } as CSSProperties}
     >
       <div aria-hidden className="pointer-events-none absolute inset-0 mx-auto max-w-[1440px]">
-        <img src="/figma/intro/216b2.svg" alt="" className="burst-r spin-slow absolute top-[-127px] right-[-78px] h-[276px] w-[274.5px] max-w-none" />
-        <img src="/figma/intro/427d7.svg" alt="" className="burst-l spin-slow-reverse absolute top-[-282px] left-[-165px] h-[517px] w-[518px] max-w-none" />
+        <img src="/figma/intro/216b2.svg" alt="" className="burst-r spin-slow absolute top-[-57px] right-[-35px] h-[124px] w-[124px] max-w-none md:top-[-89px] md:right-[-55px] md:h-[193px] md:w-[192px] lg:top-[-127px] lg:right-[-78px] lg:h-[276px] lg:w-[274.5px]" />
+        <img src="/figma/intro/427d7.svg" alt="" className="burst-l spin-slow-reverse absolute top-[-127px] left-[-74px] size-[233px] max-w-none md:top-[-197px] md:left-[-116px] md:h-[362px] md:w-[363px] lg:top-[-282px] lg:left-[-165px] lg:h-[517px] lg:w-[518px]" />
       </div>
 
       <div className="relative mx-auto max-w-[1440px] px-4 py-20 md:px-10 md:py-[120px] lg:px-20">

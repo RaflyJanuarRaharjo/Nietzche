@@ -114,8 +114,8 @@ export default function Agents() {
   return (
     <section id="agents" className="relative scroll-mt-28 bg-white">
       <div aria-hidden className="pointer-events-none absolute inset-0 mx-auto max-w-[1440px]">
-        <img src="/figma/agents/ca5f1.svg" alt="" className="spin-slow absolute top-[-4px] right-[-125px] size-[353px] max-w-none" />
-        <img src="/figma/agents/ef981.svg" alt="" className="spin-slow-reverse absolute top-[802px] left-[-177px] size-[353px] max-w-none" />
+        <img src="/figma/agents/ca5f1.svg" alt="" className="spin-slow absolute top-[-2px] right-[-56px] size-[159px] max-w-none md:top-[-3px] md:right-[-88px] md:size-[247px] lg:top-[-4px] lg:right-[-125px] lg:size-[353px]" />
+        <img src="/figma/agents/ef981.svg" alt="" className="spin-slow-reverse absolute top-[802px] left-[-80px] size-[159px] max-w-none md:left-[-124px] md:size-[247px] lg:left-[-177px] lg:size-[353px]" />
       </div>
 
       <div className="relative mx-auto flex max-w-[1440px] flex-col gap-12 px-4 py-20 md:gap-20 md:px-10 md:py-[120px] lg:px-20">
